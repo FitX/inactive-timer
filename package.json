@@ -1,0 +1,34 @@
+{
+  "name": "inactive-timer",
+  "description": "Inactive Timer function with web worker Support. Starts a Timer and Reset them on User Interaction.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "jest",
+    "test": "npm run test:unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FitX/inactive-timer.git"
+  },
+  "keywords": [
+    "timer",
+    "countdown",
+    "vue"
+  ],
+  "author": "Michael Raguse @top_webdesign",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FitX/inactive-timer/issues"
+  },
+  "homepage": "https://github.com/FitX/inactive-timer#readme",
+  "dependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@vueuse/core": "^7.4.0",
+    "babel-jest": "^27.4.5",
+    "jest": "^27.4.5",
+    "vue": "^3.2.26",
+    "worker-timers": "^7.0.43"
+  }
+}
