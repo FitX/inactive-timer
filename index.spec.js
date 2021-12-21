@@ -4,6 +4,7 @@ import { useSetup } from './mount-helper';
 describe('check timer', () => {
   it('can be start', () => {
     jest.useFakeTimers();
+    const setIntervalSpy = jest.spyOn(window, 'setInterval')
     // jest.runAllTimers();
     useSetup(() => {
       const {
@@ -18,7 +19,7 @@ describe('check timer', () => {
       start();
       expect(isRunning.value).toBe(true);
       expect(time.value).toBe(600);
-      expect(setInterval).toHaveBeenCalledTimes(1);
+      expect(setIntervalSpy).toHaveBeenCalledTimes(1);
       // jest.useRealTimers();
     });
   });
@@ -51,7 +52,7 @@ describe('check timer', () => {
     const {
       start,
       onTimeUpdate,
-      onRedirectDone,
+      onTimerDone,
     } = useInactiveTimer(); // 600
     let timeUpdateCount = null;
     let redirectDone = false;
@@ -64,7 +65,7 @@ describe('check timer', () => {
     expect(timeUpdateCount).toBe(178);
     jest.advanceTimersByTime(2000);
     expect(timeUpdateCount).toBe(176);
-    onRedirectDone((done) => {
+    onTimerDone((done) => {
       redirectDone = done;
     });
     expect(redirectDone).toBe(false);

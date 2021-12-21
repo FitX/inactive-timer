@@ -30,5 +30,8 @@
     "jest": "^27.4.5",
     "vue": "^3.2.26",
     "worker-timers": "^7.0.43"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1"
   }
 }
