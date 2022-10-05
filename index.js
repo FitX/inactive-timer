@@ -102,6 +102,7 @@ export const useInactiveTimer = (eventNames = 'keydown click scroll') => {
    */
   function stop() {
     isRunning.value = false;
+    // timer end (0) should be visible, so we set timeout
     setTimeout(() => {
       clear();
     }, 100);
