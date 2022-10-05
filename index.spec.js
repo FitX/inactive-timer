@@ -1,10 +1,11 @@
+import { vi, expect, describe, it } from 'vitest';
 import useInactiveTimer from './index';
 import { useSetup } from './mount-helper';
 
 describe('check timer', () => {
   it('can be start', () => {
-    jest.useFakeTimers();
-    const setIntervalSpy = jest.spyOn(window, 'setInterval')
+    vi.useFakeTimers();
+    const setIntervalSpy = vi.spyOn(window, 'setInterval')
     // jest.runAllTimers();
     useSetup(() => {
       const {
@@ -24,7 +25,7 @@ describe('check timer', () => {
     });
   });
   it('timer ends', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const {
       time,
       start,
@@ -42,13 +43,13 @@ describe('check timer', () => {
     expect(timeUpdateCount).toBe(179); */
 
     // Fast-forward until all timers have been executed
-    jest.advanceTimersByTime(180000);
+    vi.advanceTimersByTime(180000);
     expect(time.value).toBe(0);
     expect(timeUpdateCount).toBe(0);
     // jest.useRealTimers();
   });
   it('should trigger events', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const {
       start,
       onTimeUpdate,
@@ -61,20 +62,20 @@ describe('check timer', () => {
     });
     start();
     // 2s Tick
-    jest.advanceTimersByTime(2000);
+    vi.advanceTimersByTime(2000);
     expect(timeUpdateCount).toBe(178);
-    jest.advanceTimersByTime(2000);
+    vi.advanceTimersByTime(2000);
     expect(timeUpdateCount).toBe(176);
     onTimerDone((done) => {
       redirectDone = done;
     });
     expect(redirectDone).toBe(false);
     // Rest of Tick ahead + 1 Tick for done
-    jest.advanceTimersByTime(177000);
+    vi.advanceTimersByTime(177000);
     expect(redirectDone).toBe(true);
   });
   it('should be stoppable', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const {
       start,
       isRunning,
@@ -82,7 +83,7 @@ describe('check timer', () => {
     } = useInactiveTimer();
     expect(isRunning.value).toBe(false);
     start();
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
     expect(isRunning.value).toBe(true);
     stop();
     expect(isRunning.value).toBe(false);
@@ -98,10 +99,10 @@ describe('check timer', () => {
     expect(fn).toHaveBeenCalledTimes(1);
   }); */
   it('event listener added', async () => {
-    const adder = jest
+    const adder = vi
       .spyOn(global, 'addEventListener')
       .mockImplementation(() => {});
-    const remover = jest
+    const remover = vi
       .spyOn(global, 'removeEventListener')
       .mockImplementation(() => {});
     const wrapper = useSetup(() => {
