@@ -23,8 +23,6 @@
   },
   "homepage": "https://github.com/FitX/inactive-timer#readme",
   "dependencies": {
-    "@babel/core": "^7.19.3",
-    "@babel/preset-env": "^7.19.3",
     "@vueuse/core": "^9.3.0",
     "vue": "^3.2.40",
     "worker-timers": "^7.0.54"

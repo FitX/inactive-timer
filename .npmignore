@@ -1,0 +1,7 @@
+demo
+node_modules
+coverage
+vitest.config.ts
+vite-env.d.ts
+tsconfig.json
+index.spec.js
