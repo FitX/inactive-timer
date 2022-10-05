@@ -1,4 +1,5 @@
 import { vi, expect, describe, it } from 'vitest';
+import { nextTick } from 'vue';
 import useInactiveTimer from './index';
 import { useSetup } from './mount-helper';
 
@@ -19,12 +20,14 @@ describe('check timer', () => {
       countdown.value = 600;
       start();
       expect(isRunning.value).toBe(true);
+      vi.advanceTimersToNextTimer()
       expect(time.value).toBe(600);
       expect(setIntervalSpy).toHaveBeenCalledTimes(1);
       // jest.useRealTimers();
     });
+    vi.clearAllTimers();
   });
-  it('timer ends', () => {
+  it('timer ends', async () => {
     vi.useFakeTimers();
     const {
       time,
@@ -37,12 +40,6 @@ describe('check timer', () => {
     });
     expect(time.value).toBe(180);
     start();
-    // 1s Tick
-    /* jest.advanceTimersByTime(1000);
-    expect(time.value).toBe(179);
-    expect(timeUpdateCount).toBe(179); */
-
-    // Fast-forward until all timers have been executed
     vi.advanceTimersByTime(180000);
     expect(time.value).toBe(0);
     expect(timeUpdateCount).toBe(0);

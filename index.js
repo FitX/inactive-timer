@@ -102,7 +102,9 @@ export const useInactiveTimer = (eventNames = 'keydown click scroll') => {
    */
   function stop() {
     isRunning.value = false;
-    clear();
+    setTimeout(() => {
+      clear();
+    }, 100);
     stopListen();
     if (intervalId.value) {
       workerTimers.clearInterval(intervalId.value);
