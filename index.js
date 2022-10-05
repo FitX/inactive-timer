@@ -28,7 +28,7 @@ function removeListenerMulti(element, eventNames, listener) {
 /**
  * Inactive Timer
  */
-export default function useInactiveTimer(eventNames = 'keydown click scroll') {
+export const useInactiveTimer = (eventNames = 'keydown click scroll') => {
   let workerTimers = {};
   if (window.Worker) {
     workerTimers = workerTimersInstance;
@@ -102,9 +102,7 @@ export default function useInactiveTimer(eventNames = 'keydown click scroll') {
    */
   function stop() {
     isRunning.value = false;
-    setTimeout(() => {
-      clear();
-    }, 100);
+    clear();
     stopListen();
     if (intervalId.value) {
       workerTimers.clearInterval(intervalId.value);
@@ -133,8 +131,7 @@ export default function useInactiveTimer(eventNames = 'keydown click scroll') {
    * Start Timer
    */
   function start() {
-    clear();
-    stopListen();
+    stop();
     startListen();
     isRunning.value = true;
     intervalId.value = workerTimers.setInterval(() => {
@@ -158,3 +155,5 @@ export default function useInactiveTimer(eventNames = 'keydown click scroll') {
     countdown,
   };
 }
+
+export default useInactiveTimer;
