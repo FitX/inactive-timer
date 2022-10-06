@@ -1,6 +1,5 @@
 import { vi, expect, describe, it } from 'vitest';
-import { nextTick } from 'vue';
-import useInactiveTimer from './index';
+import { useInactiveTimer } from './index';
 import { useSetup } from './mount-helper';
 
 describe('check timer', () => {

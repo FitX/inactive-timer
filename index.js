@@ -25,22 +25,27 @@ function removeListenerMulti(element, eventNames, listener) {
   });
 }
 
-/**
- * Inactive Timer
- */
-export const useInactiveTimer = (eventNames = 'keydown click scroll') => {
-  let workerTimers = {};
+export const getWorkerInstance = () => {
   if (window.Worker) {
-    workerTimers = workerTimersInstance;
+    return workerTimersInstance;
   } else {
     /**
      * Fallback for non Browser like Node or Unit Tests
      */
+    const workerTimers = {};
     workerTimers.clearInterval = clearInterval;
     workerTimers.clearTimeout = clearTimeout;
     workerTimers.setInterval = setInterval;
     workerTimers.setTimeout = setTimeout;
+    return workerTimers;
   }
+};
+
+/**
+ * Inactive Timer
+ */
+export const useInactiveTimer = (eventNames = 'keydown click scroll') => {
+  let workerTimers = getWorkerInstance();
   /**
    * Is Running State
    * @type {Ref<UnwrapRef<boolean>>}
