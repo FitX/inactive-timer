@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { vi, expect, describe, it } from 'vitest';
-import { useInactiveTimer } from './index';
-import { useSetup } from './test-utils/mount-helper.ts';
+import { useInactiveTimer } from './main';
+import { useSetup } from '../test-utils/mount-helper';
 
 describe('check timer', () => {
   it('can be start', () => {

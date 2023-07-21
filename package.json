@@ -2,10 +2,25 @@
   "name": "@fitx/inactive-timer",
   "description": "Inactive Timer function with web worker Support. Starts a Timer and Reset them on User Interaction.",
   "version": "1.2.0",
-  "main": "index.js",
+  "type": "module",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "main": "./dist/inactive-timer.umd.cjs",
+  "module": "./dist/inactive-timer.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    "types": "./dist/main.d.ts",
+    "import": "./dist/inactive-timer.js",
+    "require": "./dist/inactive-timer.umd.cjs"
+  },
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && tsc -P tsconfig.dts.json",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:bench": "vitest bench"
   },
   "repository": {
     "type": "git",
@@ -23,16 +38,21 @@
   },
   "homepage": "https://github.com/FitX/inactive-timer#readme",
   "dependencies": {
-    "@vueuse/core": "^9.3.0",
-    "vue": "^3.2.40",
-    "worker-timers": "^7.0.54"
+    "@vueuse/core": "^10.2.1",
+    "vue": "^3.3.4",
+    "worker-timers": "^7.0.73"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "@vitejs/plugin-vue": "latest",
-    "@vitest/coverage-c8": "^0.23.4",
-    "@vue/test-utils": "^2.0.0",
-    "jsdom": "latest",
-    "vite": "latest",
-    "vitest": "^0.23.4"
+    "@vitest/coverage-c8": "^0.33.0",
+    "@vue/test-utils": "^2.4.1",
+    "eslint": "^8.45.0",
+    "jsdom": "^22.1.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.6",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^0.33.0"
   }
 }
