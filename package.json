@@ -9,9 +9,9 @@
   ],
   "main": "./dist/inactive-timer.umd.cjs",
   "module": "./dist/inactive-timer.js",
-  "types": "./dist/main.d.ts",
+  "types": "./dist/lib/main.d.ts",
   "exports": {
-    "types": "./dist/main.d.ts",
+    "types": "./dist/lib/main.d.ts",
     "import": "./dist/inactive-timer.js",
     "require": "./dist/inactive-timer.umd.cjs"
   },
