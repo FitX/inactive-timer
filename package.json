@@ -1,7 +1,7 @@
 {
   "name": "@fitx/inactive-timer",
   "description": "Inactive Timer function with web worker Support. Starts a Timer and Reset them on User Interaction.",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "type": "module",
   "files": [
     "dist",
