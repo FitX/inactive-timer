@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { vi, expect, describe, it } from 'vitest';
 import { useInactiveTimer } from './main';
 import { useSetup } from '../test-utils/mount-helper';
