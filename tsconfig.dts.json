@@ -4,6 +4,7 @@
     "noEmit": false,
     "declaration": true,
     "declarationDir": "dist",
+    "rootDir": ".",
     "emitDeclarationOnly": true
   },
   "include": ["lib"]
