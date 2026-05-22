@@ -1,19 +1,22 @@
-import {
-  ref,
-  onBeforeUnmount,
-} from 'vue';
-import {
-  createEventHook,
-} from '@vueuse/core';
+import { ref, onBeforeUnmount } from 'vue';
+import { createEventHook } from '@vueuse/core';
 import * as workerTimersInstance from 'worker-timers';
 
-function addListenerMulti(element: HTMLElement | Window, eventNames: string, listener: EventListenerOrEventListenerObject) {
+function addListenerMulti(
+  element: HTMLElement | Window,
+  eventNames: string,
+  listener: EventListenerOrEventListenerObject,
+) {
   [].forEach.call(eventNames.split(' '), (e: string) => {
     element.addEventListener(e, listener, true);
   });
 }
 
-function removeListenerMulti(element: HTMLElement | Window, eventNames: string, listener: EventListenerOrEventListenerObject) {
+function removeListenerMulti(
+  element: HTMLElement | Window,
+  eventNames: string,
+  listener: EventListenerOrEventListenerObject,
+) {
   [].forEach.call(eventNames.split(' '), (e: string) => {
     element.removeEventListener(e, listener, true);
   });
@@ -30,7 +33,7 @@ const getWorkerInstance = () => {
       clearInterval,
       clearTimeout,
       setInterval,
-      setTimeout
+      setTimeout,
     };
     return workerTimers;
   }

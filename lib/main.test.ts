@@ -5,21 +5,16 @@ import { useSetup } from '../test-utils/mount-helper';
 describe('check timer', () => {
   it('can be start', () => {
     vi.useFakeTimers();
-    const setIntervalSpy = vi.spyOn(window, 'setInterval')
+    const setIntervalSpy = vi.spyOn(window, 'setInterval');
     // jest.runAllTimers();
     useSetup(() => {
-      const {
-        time,
-        isRunning,
-        start,
-        countdown,
-      } = useInactiveTimer(); // 600
+      const { time, isRunning, start, countdown } = useInactiveTimer(); // 600
       expect(time.value).toBe(180);
       expect(isRunning.value).toBe(false);
       countdown.value = 600;
       start();
       expect(isRunning.value).toBe(true);
-      vi.advanceTimersToNextTimer()
+      vi.advanceTimersToNextTimer();
       expect(time.value).toBe(600);
       expect(setIntervalSpy).toHaveBeenCalledTimes(1);
       // jest.useRealTimers();
@@ -28,11 +23,7 @@ describe('check timer', () => {
   });
   it('timer ends', async () => {
     vi.useFakeTimers();
-    const {
-      time,
-      start,
-      onTimeUpdate,
-    } = useInactiveTimer(); // 600
+    const { time, start, onTimeUpdate } = useInactiveTimer(); // 600
     let timeUpdateCount = null;
     onTimeUpdate((count) => {
       timeUpdateCount = count;
@@ -46,11 +37,7 @@ describe('check timer', () => {
   });
   it('should trigger events', () => {
     vi.useFakeTimers();
-    const {
-      start,
-      onTimeUpdate,
-      onTimerDone,
-    } = useInactiveTimer(); // 600
+    const { start, onTimeUpdate, onTimerDone } = useInactiveTimer(); // 600
     let timeUpdateCount = null;
     let redirectDone = false;
     onTimeUpdate((count) => {
@@ -72,11 +59,7 @@ describe('check timer', () => {
   });
   it('should be stoppable', () => {
     vi.useFakeTimers();
-    const {
-      start,
-      isRunning,
-      stop,
-    } = useInactiveTimer();
+    const { start, isRunning, stop } = useInactiveTimer();
     expect(isRunning.value).toBe(false);
     start();
     vi.advanceTimersByTime(1000);
@@ -95,16 +78,10 @@ describe('check timer', () => {
     expect(fn).toHaveBeenCalledTimes(1);
   }); */
   it('event listener added', async () => {
-    const adder = vi
-      .spyOn(global, 'addEventListener')
-      .mockImplementation(() => {});
-    const remover = vi
-      .spyOn(global, 'removeEventListener')
-      .mockImplementation(() => {});
+    const adder = vi.spyOn(global, 'addEventListener').mockImplementation(() => {});
+    const remover = vi.spyOn(global, 'removeEventListener').mockImplementation(() => {});
     const wrapper = useSetup(() => {
-      const {
-        start,
-      } = useInactiveTimer();
+      const { start } = useInactiveTimer();
       start();
     });
     // this seems to work
