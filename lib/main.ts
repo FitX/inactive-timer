@@ -1,34 +1,31 @@
-import { ref, onBeforeUnmount } from 'vue';
+import { ref, watch, onBeforeUnmount } from 'vue';
 import { createEventHook } from '@vueuse/core';
 import * as workerTimersInstance from 'worker-timers';
 
-function addListenerMulti(
+const addListenerMulti = (
   element: HTMLElement | Window,
   eventNames: string,
   listener: EventListenerOrEventListenerObject,
-) {
-  [].forEach.call(eventNames.split(' '), (e: string) => {
+) => {
+  eventNames.split(' ').forEach((e) => {
     element.addEventListener(e, listener, true);
   });
-}
+};
 
-function removeListenerMulti(
+const removeListenerMulti = (
   element: HTMLElement | Window,
   eventNames: string,
   listener: EventListenerOrEventListenerObject,
-) {
-  [].forEach.call(eventNames.split(' '), (e: string) => {
+) => {
+  eventNames.split(' ').forEach((e) => {
     element.removeEventListener(e, listener, true);
   });
-}
+};
 
 const getWorkerInstance = () => {
   if (window.Worker) {
     return workerTimersInstance;
   } else {
-    /**
-     * Fallback for non Browser like Node or Unit Tests
-     */
     const workerTimers: typeof workerTimersInstance = {
       clearInterval,
       clearTimeout,
@@ -48,60 +45,56 @@ export const useInactiveTimer = (eventNames: string = 'keydown click scroll') =>
   const countdown = ref(180);
   const time = ref(countdown.value);
 
-  function resetTime() {
+  const resetTime = () => {
     time.value = countdown.value;
-  }
+  };
 
-  function clear() {
-    resetTime();
-  }
-
-  function startListen() {
+  const startListen = () => {
     addListenerMulti(window, eventNames, resetTime);
-  }
+  };
 
-  function stopListen() {
+  const stopListen = () => {
     removeListenerMulti(window, eventNames, resetTime);
-  }
+  };
 
-  const intervalId = ref<number>();
+  let intervalId: number | undefined;
 
-  function stop() {
+  const stop = () => {
     isRunning.value = false;
-    // timer end (0) should be visible, so we set timeout
-    setTimeout(() => {
-      clear();
+    // keep time=0 visible for one tick before resetting
+    workerTimers.setTimeout(() => {
+      resetTime();
     }, 100);
     stopListen();
-    if (intervalId.value) {
-      workerTimers.clearInterval(intervalId.value);
-      intervalId.value = undefined;
+    if (intervalId !== undefined) {
+      workerTimers.clearInterval(intervalId);
+      intervalId = undefined;
     }
-  }
+  };
 
-  function updateTime() {
+  const updateTime = () => {
     if (time.value > 0) {
       time.value -= 1;
     }
     timeUpdate.trigger(time.value);
-  }
+  };
 
-  function handleDone() {
-    timerDone.trigger(true);
-  }
-
-  function start() {
+  const start = () => {
     stop();
     startListen();
     isRunning.value = true;
-    intervalId.value = workerTimers.setInterval(() => {
+    intervalId = workerTimers.setInterval(() => {
       updateTime();
       if (time.value <= 0) {
         stop();
-        handleDone();
+        timerDone.trigger(true);
       }
     }, 1000);
-  }
+  };
+
+  watch(countdown, () => {
+    if (isRunning.value) resetTime();
+  });
 
   onBeforeUnmount(() => {
     stop();
