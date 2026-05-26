@@ -4,9 +4,13 @@ import { useInactiveTimer } from './main';
 import { useSetup } from '../test-utils/mount-helper';
 
 vi.mock('worker-timers', () => ({
-  setInterval: vi.fn((cb: TimerHandler, ms: number) => window.setInterval(cb, ms) as unknown as number),
+  setInterval: vi.fn(
+    (cb: TimerHandler, ms: number) => window.setInterval(cb, ms) as unknown as number,
+  ),
   clearInterval: vi.fn((id: number) => window.clearInterval(id)),
-  setTimeout: vi.fn((cb: TimerHandler, ms: number) => window.setTimeout(cb, ms) as unknown as number),
+  setTimeout: vi.fn(
+    (cb: TimerHandler, ms: number) => window.setTimeout(cb, ms) as unknown as number,
+  ),
   clearTimeout: vi.fn((id: number) => window.clearTimeout(id)),
 }));
 
@@ -96,7 +100,9 @@ describe('check timer', () => {
       const { start, countdown, onTimerDone } = useInactiveTimer();
       let done = false;
       countdown.value = 0;
-      onTimerDone(() => { done = true; });
+      onTimerDone(() => {
+        done = true;
+      });
       start();
       vi.advanceTimersByTime(1000);
       expect(done).toBe(true);
@@ -113,7 +119,11 @@ describe('check timer', () => {
   });
   it('uses worker-timers when window.Worker is available', () => {
     vi.useFakeTimers();
-    Object.defineProperty(window, 'Worker', { value: class {}, configurable: true, writable: true });
+    Object.defineProperty(window, 'Worker', {
+      value: class {},
+      configurable: true,
+      writable: true,
+    });
 
     useSetup(() => {
       const { start, stop } = useInactiveTimer();
@@ -122,7 +132,11 @@ describe('check timer', () => {
       stop();
     });
 
-    Object.defineProperty(window, 'Worker', { value: undefined, configurable: true, writable: true });
+    Object.defineProperty(window, 'Worker', {
+      value: undefined,
+      configurable: true,
+      writable: true,
+    });
     vi.clearAllMocks();
   });
   it('event listener added', async () => {
