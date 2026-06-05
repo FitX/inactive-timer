@@ -1,16 +1,9 @@
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
-import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
-  plugins: [
-    eslint({
-      include: [
-        './lib/**/*.ts',
-      ],
-    }),
-  ],
+  plugins: [],
   build: {
     lib: {
       entry: fileURLToPath(new URL('./lib/main.ts', import.meta.url)),
@@ -21,8 +14,11 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue', '@vueuse/core', 'worker-timers'],
       output: {
+        exports: 'named',
         globals: {
           vue: 'Vue',
+          '@vueuse/core': 'VueuseCore',
+          'worker-timers': 'WorkerTimers',
         },
       },
     },
