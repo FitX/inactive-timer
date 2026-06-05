@@ -2,6 +2,8 @@
 Inactive Timer composable with Web [Worker](https://github.com/chrisguttandin/worker-timers) support.
 Starts a countdown and resets it on user interaction. EventHooks via [VueUse](https://github.com/vueuse/vueuse)
 
+[![Socket Badge](https://socket.dev/api/badge/npm/package/@fitx/inactive-timer)](https://socket.dev/npm/package/@fitx/inactive-timer)
+
 ## Installation
 ```bash
 npm i @fitx/inactive-timer
